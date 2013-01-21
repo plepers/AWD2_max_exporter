@@ -1,0 +1,169 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_AWDEXPORT_DLG DIALOGEX 0, 0, 342, 207
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ASCII Export"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "Geometric",IDC_OBJ_GEOM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,154,20,50,10
+    CONTROL         "Shapes",IDC_OBJ_SHAPE,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,154,35,40,10
+    CONTROL         "Cameras",IDC_OBJ_CAMERA,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,154,50,43,10
+    CONTROL         "Lights",IDC_OBJ_LIGHT,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,154,65,35,10
+    CONTROL         "Helpers",IDC_OBJ_HELPER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,154,81,40,10
+    CONTROL         "Mesh Definition",IDC_MESHDATA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,20,73,10
+    CONTROL         "Materials",IDC_MATERIAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,35,43,10
+    CONTROL         "Transform Animation Keys",IDC_ANIMKEYS,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,15,50,99,10
+    CONTROL         "Animated Mesh",IDC_MESHANIM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,15,65,95,10
+    CONTROL         "Animated Camera/Light Settings",IDC_CAMLIGHTANIM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP,15,80,120,10
+    CONTROL         "Inverse Kinematics Joints",IDC_IKJOINTS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,95,110,10
+    CONTROL         "Mesh Normals",IDC_NORMALS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,124,95,10
+    CONTROL         "Mapping Coordinates",IDC_TEXCOORDS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,139,95,10
+    CONTROL         "Vertex Colors",IDC_VERTEXCOLORS,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,15,154,57,10
+    DEFPUSHBUTTON   "OK",IDOK,282,182,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,226,182,50,14
+    CONTROL         "",IDC_STATIC_FRAME,"CustEdit",WS_TABSTOP,289,61,25,10
+    GROUPBOX        "Output Options",-1,5,7,134,102
+    GROUPBOX        "Mesh Options",-1,5,110,134,60
+    GROUPBOX        "Object Types",-1,145,7,92,102
+    CONTROL         "",IDC_STATIC_FRAME_SPIN,"SpinnerControl",0x0,315,61,7,10
+    RTEXT           "Frame #:",-1,253,62,31,8
+    GROUPBOX        "Static Output",-1,243,46,90,30
+    GROUPBOX        "Precision",-1,243,79,90,30
+    GROUPBOX        "Compression",-1,244,7,89,35
+    COMBOBOX        IDC_COMP_COMBO,252,21,74,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Optimize for accuracy",IDC_WIDE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,250,91,81,10
+    CONTROL         "Textures",IDC_TEXTURES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,35,55,10
+END
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 172, 76
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About ASCII Export"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,60,55,50,14
+    RTEXT           "AWD2 File Exporter\nVersion 1.0\nPierre Lepers",IDC_STATIC,10,13,151,36
+    GROUPBOX        "",IDC_STATIC,7,7,158,44
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_AWDEXPORT_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 165
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 69
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_LIBDESCRIPTION      "Max exporter plugin for AWD2.0 (away3D) format"
+    IDS_CATEGORY            "away3dexporter"
+    IDS_CLASS_NAME          "AWDExporter"
+    IDS_PARAMS              "Parameters"
+    IDS_SPIN                "Spin"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// French (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // French (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
