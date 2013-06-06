@@ -277,7 +277,8 @@ INT_PTR CALLBACK AWDExporterOptionsDlgProc(HWND hWnd,UINT message,WPARAM wParam,
 				IDC_MESHDATA));
 			EnableWindow(GetDlgItem(hWnd, IDC_TEXCOORDS), IsDlgButtonChecked(hWnd,
 				IDC_MESHDATA));
-			EnableWindow(GetDlgItem(hWnd, IDC_VERTEXCOLORS), FALSE );
+			EnableWindow(GetDlgItem(hWnd, IDC_VERTEXCOLORS), IsDlgButtonChecked(hWnd,
+				IDC_MESHDATA));
 			// Enable / disable mesh options
 			EnableWindow(GetDlgItem(hWnd, IDC_TEXTURES), IsDlgButtonChecked(hWnd,
 				IDC_MATERIAL));
@@ -292,7 +293,8 @@ INT_PTR CALLBACK AWDExporterOptionsDlgProc(HWND hWnd,UINT message,WPARAM wParam,
 					EnableWindow(GetDlgItem(hWnd, IDC_TEXCOORDS), IsDlgButtonChecked(hWnd,
 						IDC_MESHDATA));
 					// Vertex colors not yet supported
-					EnableWindow(GetDlgItem(hWnd, IDC_VERTEXCOLORS), FALSE );
+					EnableWindow(GetDlgItem(hWnd, IDC_VERTEXCOLORS), IsDlgButtonChecked(hWnd,
+						IDC_MESHDATA));
 					break;
 				case IDC_MATERIAL:
 					// Enable / disable mesh options
@@ -355,7 +357,7 @@ AWDExporter::AWDExporter()
 	bIncludeIKJoints = TRUE;
 	bIncludeNormals  =  TRUE;
 	bIncludeTextureCoords = TRUE;
-	bIncludeVertexColors = FALSE;
+	bIncludeVertexColors = TRUE;
 	bIncludeObjGeom = TRUE;
 	bIncludeObjShape = FALSE;
 	bIncludeObjCamera = FALSE;
@@ -832,7 +834,9 @@ AWDMeshData* AWDExporter::_prepareMeshData(INode* node, AWD *awd, awd_ncache *nc
 	DWORD tvertindex;
 	Point3 xyz;
 	Point3 norms;
+
 	VertColor vertCol;
+	BOOL hasColors;
 
 	UVVert uv;
 	BOOL hasUV;
@@ -862,6 +866,8 @@ AWDMeshData* AWDExporter::_prepareMeshData(INode* node, AWD *awd, awd_ncache *nc
 	
 
 	hasUV = ( mesh->getNumTVerts() != 0 );
+
+	hasColors = ( mesh->getNumVertCol() != 0 );
 
 	if( GetIncludeIKJoints() ) {
 		skin = GetMeshSkin( ignode );
@@ -941,11 +947,16 @@ AWDMeshData* AWDExporter::_prepareMeshData(INode* node, AWD *awd, awd_ncache *nc
 						uv = mesh->tVerts[ tvertindex ];
 					}
 
+					if( hasColors ) {
+						tvertindex = mesh->vcFace[i].t[vindices[t]];
+						vertCol = mesh->vertCol[ tvertindex ];
+					}
+
 					if( skin != NULL ) {
 						ExportSkinData( skin, vertindex, skinSize, skindata );
-						faceIndices[t] = vtable->AddVertex( xyz, norms, uv, skindata );
+						faceIndices[t] = vtable->AddVertex( xyz, norms, uv, vertCol, skindata );
 					} else {
-						faceIndices[t] = vtable->AddVertex( xyz, norms, uv, NULL );
+						faceIndices[t] = vtable->AddVertex( xyz, norms, uv, vertCol, NULL );
 					}
 
 
@@ -990,24 +1001,56 @@ AWDMeshData* AWDExporter::_prepareMeshData(INode* node, AWD *awd, awd_ncache *nc
 			lawd_sub->add_stream( TRIANGLES, lawd_data, indexbufferlen);
 		}
 		
+		fprintf( logfile, "		after composite or indices part \n" );
+		fflush( logfile );
 
 		data_len = vtable->GetNumVertex() * 3;
 		vertexstream = vtable->getVertexStream( NULL );
 		lawd_data.f64 = vertexstream;
 		lawd_sub->add_stream(VERTICES, lawd_data, data_len);
 		
+		fprintf( logfile, "		after composite or indices part A \n" );
+		fflush( logfile );
 
 		if (GetIncludeNormals() ) { 
 			vertexstream = vtable->getNormalStream( NULL );
 			lawd_data.f64 = vertexstream;
 			lawd_sub->add_stream(VERTEX_NORMALS, lawd_data, data_len);
 		}
+		
+		fprintf( logfile, "		after composite or indices part B \n" );
+		fflush( logfile );
 
 		if( hasUV && GetIncludeTextureCoords() ) {
 			data_len = vtable->GetNumVertex() * 2;
 			vertexstream = vtable->getUvsStream( NULL );
 			lawd_data.f64 = vertexstream;
 			lawd_sub->add_stream(UVS, lawd_data, data_len);
+		}
+		
+		fprintf( logfile, "		after composite or indices partC  \n" );
+		fflush( logfile );
+
+		fprintf( logfile, "		enter vc part \n" );
+		fflush( logfile );
+
+		fprintf( logfile, "		has color : %i \n", hasColors );
+		fprintf( logfile, "		include color : %i \n", GetIncludeVertexColors() );
+		fflush( logfile );
+
+		if( hasColors && GetIncludeVertexColors() ) {
+			data_len = vtable->GetNumVertex() * 3;
+			fprintf( logfile, "		vc part A\n" );
+			fflush( logfile );
+			vertexstream = vtable->getColorsStream( NULL );
+			fprintf( logfile, "		vc part B\n" );
+			fflush( logfile );
+			lawd_data.f64 = vertexstream;
+			fprintf( logfile, "		vc part C\n" );
+			fflush( logfile );
+			lawd_sub->add_stream(VERTEX_COLORS, lawd_data, data_len);
+			fprintf( logfile, "		vc part D\n" );
+			fflush( logfile );
 		}
 
 		if( skin != NULL ) {

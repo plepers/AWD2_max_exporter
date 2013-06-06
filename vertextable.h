@@ -42,11 +42,13 @@ typedef struct {
 // A normal table hash bucket.
 class VertexDesc {
 public:
-    VertexDesc(Point3 coords, Point3 norm, Point3 uvs, SkinData* sdata ) {
+    VertexDesc(Point3 coords, Point3 norm, Point3 uvs, Point3 colors, SkinData* sdata ) {
         
 		n =		new Point3(norm.x, norm.y, norm.z);
 		pos =	new Point3(coords.x, coords.y, coords.z);
+		color =	new Point3(colors.x, colors.y, colors.z);
 		uv =	new Point3(uvs.x, 1.0f - uvs.y, 0.0f);
+
 		
 		if( sdata != NULL ) {
 			jweights = sdata->jweights;
@@ -82,6 +84,7 @@ public:
     Point3 *n;           // The normalize normal
 	Point3 *pos;         // xyz pos
 	Point3 *uv;			// UV coords
+	Point3 *color;			// UV coords
 
 	awd_float64 * jweights;
 	awd_uint32 * jindices;
@@ -102,7 +105,7 @@ public:
     VertexTable( );
     ~VertexTable();
 
-	unsigned int AddVertex(Point3 coords, Point3 norm, Point3 uv, SkinData * skindata);
+	unsigned int AddVertex(Point3 coords, Point3 norm, Point3 uv,Point3 color, SkinData * skindata);
 
 	unsigned int GetNumVertex();
 
@@ -121,6 +124,7 @@ public:
 
 	awd_float64* getVertexStream( awd_float64* buf);
 	awd_float64* getNormalStream( awd_float64* buf);
+	awd_float64* getColorsStream( awd_float64* buf);
 	awd_float64* getUvsStream( awd_float64* buf);
 	awd_float64* getSweightStream( awd_float64* buf);
 	awd_uint32* getSindicesStream( awd_uint32* buf);

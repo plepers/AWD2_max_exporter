@@ -56,9 +56,9 @@ VertexTable::GetNumVertex() {
 
 // Add a normal to the hash table
 unsigned int
-VertexTable::AddVertex(Point3 coords, Point3 norm, Point3 uv, SkinData * skindata)
+VertexTable::AddVertex(Point3 coords, Point3 norm, Point3 uv, Point3 color, SkinData * skindata)
 { 
-	VertexDesc* newvert = new VertexDesc( coords, norm, uv, skindata );
+	VertexDesc* newvert = new VertexDesc( coords, norm, uv, color, skindata );
 
 	DWORD hash = HashCode( newvert );
 
@@ -159,6 +159,7 @@ awd_float64* VertexTable::getVertexStream( awd_float64* buf) {
 }
 
 awd_float64* VertexTable::getNormalStream( awd_float64* buf) {
+
 	if (buf == NULL)
 		buf = (awd_float64*) malloc( GetNumVertex() * 3 * sizeof(awd_float64) );
 	int c = 0;
@@ -169,6 +170,23 @@ awd_float64* VertexTable::getNormalStream( awd_float64* buf) {
 		buf[c] = tn.x;
 		buf[c+1] = tn.z;
 		buf[c+2] = tn.y;
+		c = c+3;
+	}
+	return buf;
+
+
+}
+
+awd_float64* VertexTable::getColorsStream( awd_float64* buf) {
+	
+	if (buf == NULL)
+		buf = (awd_float64*) malloc( GetNumVertex() * 3 * sizeof(awd_float64) );
+	int c = 0;
+	VertexDesc* nd;
+	for(nd = _first; nd; nd = nd->next) {
+		buf[c] = nd->color->x;
+		buf[c+1] = nd->color->y;
+		buf[c+2] = nd->color->z;
 		c = c+3;
 	}
 	return buf;
